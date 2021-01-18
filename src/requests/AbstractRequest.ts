@@ -2,7 +2,7 @@ import axios from 'axios'
 import { JSDOM } from 'jsdom'
 
 export default abstract class AbstractRequest {
-	basePath = 'https://www.infoanime.com.br/'
+	basePath = 'https://www.infoanime.com.br'
 
 	abstract getPath(): string
 

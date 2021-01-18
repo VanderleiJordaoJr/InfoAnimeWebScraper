@@ -9,6 +9,6 @@ export default class AnimeRequest extends AbstractRequest {
 	}
 
 	getPath(): string {
-		return `${this.basePath}dados?obra=${this.id}`
+		return `${this.basePath}/dados?obra=${this.id}`
 	}
 }

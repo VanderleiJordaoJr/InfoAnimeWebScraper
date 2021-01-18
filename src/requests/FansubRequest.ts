@@ -1,14 +1,14 @@
 import AbstractRequest from './AbstractRequest'
 
 export default class FansubRequest extends AbstractRequest {
-	savedLink: string
+	link: string
 
-	constructor(savedLink: string) {
+	constructor(link: string) {
 		super()
-		this.savedLink = savedLink
+		this.link = link
 	}
 
 	getPath(): string {
-		return this.savedLink
+		return `${this.basePath}${this.link}`
 	}
 }

@@ -1,11 +1,13 @@
+import { getArrayFromHTMLCollection } from '../helpers'
 import AnimeListModel from '../models/AnimeListModel'
 import AbstractParser from './AbstractParser'
 
 export default class AnimeListParser extends AbstractParser<AnimeListModel> {
 	getAnimeIdList(): number[] {
 		const ids: number[] = []
-		Array.prototype.slice
-			.call(this.document.querySelector('#myUL')?.children)
+		getArrayFromHTMLCollection(
+			this.document.querySelector('#myUL')?.children
+		)
 			.filter(
 				(childEntry: HTMLElement) =>
 					childEntry.classList.toString().length == 0
