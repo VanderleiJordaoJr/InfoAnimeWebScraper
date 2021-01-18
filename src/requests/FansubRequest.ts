@@ -1,6 +1,6 @@
-import Request from './Request'
+import AbstractRequest from './AbstractRequest'
 
-export default class FansubRequest extends Request {
+export default class FansubRequest extends AbstractRequest {
 	savedLink: string
 
 	constructor(savedLink: string) {

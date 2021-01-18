@@ -1,6 +1,6 @@
-import Request from './Request'
+import AbstractRequest from './AbstractRequest'
 
-export default class AnimeRequest extends Request {
+export default class AnimeRequest extends AbstractRequest {
 	id: number
 
 	constructor(id: number) {
