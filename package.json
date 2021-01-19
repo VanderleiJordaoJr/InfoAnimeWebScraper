@@ -4,6 +4,10 @@
 	"description": "InfoAnime web scraper",
 	"main": "src/index.ts",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:VanderleiJordaoJr/InfoAnimeWebScraper.git"
+	},
 	"scripts": {
 		"build": "rimraf ./build && tsc",
 		"dev": "nodemon --exec ts-node src/index.ts",
