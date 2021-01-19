@@ -32,7 +32,7 @@ export function getElementInListByHref(
 
 export function getSeasonName(
 	infoAnimeName: string,
-	anime: string
+	anime: number
 ): string | undefined {
 	if (!infoAnimeName || infoAnimeName.length === 0) return
 	const seasonMap = new Map<string, ESeason>([
@@ -64,7 +64,7 @@ export function getSeasonName(
 		['DEZEMBRO', ESeason.FALL],
 	])
 
-	const matched = infoAnimeName.match(/([a-zA-ZÇç]+)[ /]?([0-9]+)/)
+	const matched = infoAnimeName.match(/([a-zA-ZÇçÃã]+)[ /]?([0-9]+)/)
 	if (matched === null) {
 		console.log(`Invalid season ${anime}:  ${infoAnimeName}`)
 		return undefined

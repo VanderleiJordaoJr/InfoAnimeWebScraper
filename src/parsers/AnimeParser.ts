@@ -37,7 +37,10 @@ export default class AnimeParser extends AbstractParser<AnimeModel> {
 	getName(): string {
 		const name = this.document.querySelector('.titulo_obra')?.innerHTML
 		if (name !== undefined) return name
-		else throw new Error(`Error with anime ${this.id}`)
+		else {
+			console.log(this.document.body.innerHTML)
+			throw new Error(`Error with anime ${this.id}`)
+		}
 	}
 
 	getGenres(): string[] {
@@ -53,7 +56,7 @@ export default class AnimeParser extends AbstractParser<AnimeModel> {
 				this.getDataGridElementList(),
 				/lista\?lista=ano/
 			),
-			this.getName()
+			this.id
 		)
 	}
 
