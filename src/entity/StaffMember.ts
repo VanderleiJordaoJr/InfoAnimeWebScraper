@@ -5,11 +5,15 @@ export default class StaffMember extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id!: number
 
-	@Column()
+	@Column({ unique: true })
 	name: string
 
 	constructor(name: string) {
 		super()
 		this.name = name
+	}
+
+	toString(): string {
+		return JSON.stringify(this)
 	}
 }

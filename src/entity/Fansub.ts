@@ -8,7 +8,7 @@ export default class Fansub extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id!: number
 
-	@Column()
+	@Column({ unique: true })
 	name!: string
 
 	@Column({ nullable: true })
@@ -29,5 +29,9 @@ export default class Fansub extends BaseEntity {
 		this.infoAnimeLink = fansub.infoAnimeLink
 		this.link = fansub.link
 		return this
+	}
+
+	toString(): string {
+		return JSON.stringify(this)
 	}
 }

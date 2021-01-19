@@ -7,7 +7,7 @@ export default class Studio extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id!: number
 
-	@Column()
+	@Column({ unique: true })
 	name: string
 
 	@OneToMany(() => Anime, (anime) => anime.studio)
@@ -16,5 +16,9 @@ export default class Studio extends BaseEntity {
 	constructor(name: string) {
 		super()
 		this.name = name
+	}
+
+	toString(): string {
+		return JSON.stringify(this)
 	}
 }

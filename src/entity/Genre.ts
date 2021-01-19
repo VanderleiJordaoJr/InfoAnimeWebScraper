@@ -7,7 +7,7 @@ export default class Genre extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id!: number
 
-	@Column()
+	@Column({ unique: true })
 	name: string
 
 	@ManyToMany(() => Anime, (anime) => anime.genres)
@@ -16,5 +16,9 @@ export default class Genre extends BaseEntity {
 	constructor(name: string) {
 		super()
 		this.name = name
+	}
+
+	toString(): string {
+		return JSON.stringify(this)
 	}
 }

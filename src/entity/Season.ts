@@ -25,7 +25,7 @@ export default class Season extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id!: number
 
-	@Column()
+	@Column({ unique: true })
 	name!: string
 
 	@Column()
@@ -45,7 +45,7 @@ export default class Season extends BaseEntity {
 	}
 
 	toString(): string {
-		return `Season: ${this.name} ${this.year} ${this.season}`
+		return JSON.stringify(this)
 	}
 
 	generate(name: string): Season {
