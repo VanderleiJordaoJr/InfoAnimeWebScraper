@@ -1,21 +1,33 @@
+import FansubModel from 'src/models/FansubModel'
 import { BaseEntity, Column, Entity, ManyToMany } from 'typeorm'
 import { PrimaryGeneratedColumn } from 'typeorm'
-import { Anime } from './Anime'
+import Anime from './Anime'
 
 @Entity('fansubs')
-export class Fansub extends BaseEntity {
+export default class Fansub extends BaseEntity {
 	@PrimaryGeneratedColumn()
-	id: number
+	id!: number
 
 	@Column()
-	name: string
-
-	@Column()
-	infoAnimeLink: string
+	name!: string
 
 	@Column({ nullable: true })
-	link: string
+	link?: string
+
+	@Column({ nullable: true })
+	infoAnimeLink?: string
 
 	@ManyToMany(() => Anime, (anime) => anime.fansubs)
-	animes: Anime[]
+	animes?: Anime[]
+
+	constructor() {
+		super()
+	}
+
+	generate(fansub: FansubModel): Fansub {
+		this.name = fansub.name
+		this.infoAnimeLink = fansub.infoAnimeLink
+		this.link = fansub.link
+		return this
+	}
 }

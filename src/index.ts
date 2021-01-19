@@ -1,7 +1,8 @@
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
-import { Anime } from './entity/Anime'
+import AnimeListJob from './jobs/AnimeListJob'
 ;(async () => {
 	await createConnection()
-	console.log(await Anime.find())
+	const job = new AnimeListJob()
+	await job.run()
 })()

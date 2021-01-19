@@ -7,7 +7,14 @@ export default abstract class AbstractRequest {
 	abstract getPath(): string
 
 	async getDOM(): Promise<Document> {
-		const response = await axios.get(this.getPath())
-		return new JSDOM(response.data).window.document
+		const promise = axios.get(this.getPath())
+		const response = await promise
+			.then((success) => success)
+			.catch((err) => {
+				console.log(`Error running axios ${err}`)
+			})
+		if (response !== undefined)
+			return new JSDOM(response.data).window.document
+		else throw new Error()
 	}
 }

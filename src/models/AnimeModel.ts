@@ -3,13 +3,13 @@ import FansubModel from './FansubModel'
 export interface IAnimeModel {
 	id: number
 	name: string
-	episodes: number
-	malId: number
+	episodes: number | undefined
+	malId: number | undefined
 	synopsis: string
 	genres: string[]
 	fansubs: FansubModel[]
 	studio: string
-	season: string
+	season: string | undefined
 	director: string
 	originalCreator: string
 }
@@ -17,13 +17,13 @@ export interface IAnimeModel {
 export default class AnimeModel {
 	id: number
 	name: string
-	episodes: number
-	malId: number
+	episodes: number | undefined
+	malId: number | undefined
 	synopsis: string
 	genres: string[]
 	fansubs: FansubModel[]
 	studio: string
-	season: string
+	season: string | undefined
 	director: string
 	originalCreator: string
 

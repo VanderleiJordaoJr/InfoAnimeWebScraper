@@ -9,13 +9,16 @@ export default class FansubParser extends AbstractParser<FansubModel> {
 		this.fansubBaseModel = fansubBaseModel
 	}
 
-	getLink(): string {
+	getLink(): string | undefined {
 		const result = this.document
 			.querySelector('div[title="Site"]')
 			?.parentElement?.getAttribute('href') as string
 		console.log(result)
 		if (result !== undefined) return result
-		else throw new Error()
+		else {
+			console.log(`Undefined link at fansub ${this.fansubBaseModel.name}`)
+			return undefined
+		}
 	}
 
 	getModel(): FansubModel {

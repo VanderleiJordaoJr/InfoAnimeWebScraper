@@ -1,7 +1,11 @@
 import AnimeModel from '../models/AnimeModel'
 import AbstractParser from './AbstractParser'
-import { getArrayFromHTMLCollection, getElementInListByHref } from '../helpers'
-import { getElementsInListByHref } from '../helpers'
+import {
+	getArrayFromHTMLCollection,
+	getElementInListByHref,
+	getElementsInListByHref,
+	getSeasonName,
+} from '../helpers/parser'
 import FansubModel from '../models/FansubModel'
 
 export default class AnimeParser extends AbstractParser<AnimeModel> {
@@ -33,7 +37,7 @@ export default class AnimeParser extends AbstractParser<AnimeModel> {
 	getName(): string {
 		const name = this.document.querySelector('.titulo_obra')?.innerHTML
 		if (name !== undefined) return name
-		else throw new Error()
+		else throw new Error(`Error with anime ${this.id}`)
 	}
 
 	getGenres(): string[] {
@@ -43,10 +47,13 @@ export default class AnimeParser extends AbstractParser<AnimeModel> {
 		)
 	}
 
-	getSeason(): string {
-		return getElementInListByHref(
-			this.getDataGridElementList(),
-			/lista\?lista=ano/
+	getSeason(): string | undefined {
+		return getSeasonName(
+			getElementInListByHref(
+				this.getDataGridElementList(),
+				/lista\?lista=ano/
+			),
+			this.getName()
 		)
 	}
 
@@ -78,12 +85,17 @@ export default class AnimeParser extends AbstractParser<AnimeModel> {
 			.trim()
 	}
 
-	getEpisodes(): number {
+	getEpisodes(): number | undefined {
 		const text = this.getDataGridText()
 			.split('Número de Episódios: ')[1]
 			.split('Direção: ')[0]
 			.trim()
-		return Number.parseInt(text)
+		const eps = Number.parseInt(text)
+		if (isNaN(eps)) {
+			console.log(`NaN | Undefined eps in ${this.getName()}`)
+			return undefined
+		}
+		return eps
 	}
 
 	getFansubs(): FansubModel[] {
@@ -97,14 +109,24 @@ export default class AnimeParser extends AbstractParser<AnimeModel> {
 			.map((iModel) => new FansubModel(iModel))
 	}
 
-	getMalId(): number {
-		const result = this.document
-			.querySelector('div[title="MyAnimeList"]')
-			?.parentElement?.getAttribute('href')
-			?.match(/anime\/([0-9]+)/)
-			?.pop()
-		if (result !== undefined) return Number.parseInt(result)
-		else throw new Error()
+	getMalId(): number | undefined {
+		try {
+			const div = this.document.querySelector('div[title="MyAnimeList"]')
+			if (div === null) throw new Error('Element not founded')
+			const parentElement = div.parentElement
+			if (parentElement === null)
+				throw new Error('Parent element not founded')
+			const href = parentElement.getAttribute('href')
+			if (href === null) throw new Error('Href not founded')
+			const matchResult = href.match(/anime\/([0-9]+)/)
+			if (matchResult === null) throw new Error('matchResult not founded')
+			const malId = matchResult.pop()
+			if (malId === undefined) throw new Error('malId not founded')
+			return Number.parseInt(malId)
+		} catch (err) {
+			console.log(`${err} in anime ${this.id}`)
+			return undefined
+		}
 	}
 
 	getModel(): AnimeModel {

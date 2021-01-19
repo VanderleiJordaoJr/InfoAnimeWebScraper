@@ -1,10 +1,15 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity('staff')
-export class StaffMember extends BaseEntity {
+export default class StaffMember extends BaseEntity {
 	@PrimaryGeneratedColumn()
-	id: number
+	id!: number
 
 	@Column()
 	name: string
+
+	constructor(name: string) {
+		super()
+		this.name = name
+	}
 }

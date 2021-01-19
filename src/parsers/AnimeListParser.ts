@@ -1,4 +1,4 @@
-import { getArrayFromHTMLCollection } from '../helpers'
+import { getArrayFromHTMLCollection } from '../helpers/parser'
 import AnimeListModel from '../models/AnimeListModel'
 import AbstractParser from './AbstractParser'
 
@@ -14,9 +14,12 @@ export default class AnimeListParser extends AbstractParser<AnimeListModel> {
 			)
 			.forEach((childEntry: HTMLElement) => {
 				const href = childEntry.querySelector('a')?.href
-				const result = href?.match(/dados\?obra=([0-9]+)/)?.pop
-				if (result !== undefined)
-					ids.push(Number.parseInt(result.toString()))
+				const result = href?.match(/dados\?obra=([0-9]+)/)?.pop()
+				if (result !== undefined) {
+					const idString = result.toString()
+					const id = Number.parseInt(idString)
+					ids.push(id)
+				}
 			})
 		return ids
 	}
